@@ -2,9 +2,10 @@
 
 {
 	imports =
-		[ # Include the results of the hardware scan.
+		[
 			./hardware-configuration.nix
-		../common.nix
+			../common.nix
+			./disks.nix
 		];
 
 	# Use the systemd-boot EFI boot loader.
@@ -16,5 +17,4 @@
 
 	# Do *not* change or delete!
 	system.stateVersion = "26.05";
-
 }
