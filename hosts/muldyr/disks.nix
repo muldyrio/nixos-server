@@ -63,4 +63,32 @@
 			"*.!sync"
 		];
 	};
+
+	# Samba
+	services.samba = {
+		enable = true;
+		openFirewall = true;
+		
+		settings = {
+			global = {
+				"map to guest" = "Bad User";
+			};
+
+			share = {
+				path = "/mnt/storage";
+
+				"guest ok" = false;
+				"read only" = false;
+				"browsable" = true;
+
+				"force group" = "users";
+
+				"create mask" = "0644";
+				"force create mode" = "0644";
+		
+				"directory mask" = "0755";
+				"force directory mode" = "0755";
+			};
+		};
+	};
 }
