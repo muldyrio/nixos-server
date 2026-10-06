@@ -4,9 +4,11 @@ let
 	ports = {
 		homepage = 8082;
 		jellyfin = 8096;
+		immich = 2283;
 	};
 in
 {
+	# Jellyfin
 	services.jellyfin = {
 		enable = true;
 		openFirewall = true;
@@ -19,6 +21,36 @@ in
 		dataDir = "/home/aht/services/jellyfin/data";
 	};
 
+	# Immich
+	services.postgresql = {
+		enable = true;
+		ensureDatabases = [
+			"aht"
+		];
+		ensureUsers = [
+			{
+				name = "aht";
+				ensureDBOwnership = true;
+			}
+		];
+	};
+
+	services.immich = {
+		enable = true;
+		port = ports.immich;
+		openFirewall = true;
+		host = "0.0.0.0";
+		user = "aht";
+		group = "users";
+		mediaLocation = "/mnt/storage/Pictures";
+		database = {
+			createDB = false;
+			name = "aht";
+			user = "aht";
+		};
+	};
+
+	# Homepage
 	services.homepage-dashboard = {
 		enable = true;
 		listenPort = ports.homepage;
